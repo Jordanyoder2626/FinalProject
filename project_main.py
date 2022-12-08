@@ -24,28 +24,30 @@ toy = pd.DataFrame({
 toy['1$ section'] = clean_sm(toy['Cost'])
 
 print(toy)
+print("\n\n")
 
 
 ##############################################
 #Model creation
 
+s['sm_li'] = clean_sm(s['web1h'])
 
 #web1h is linkedin
-ss = s[["web1a","web1b","web1c","web1d",
-    "web1e","web1f","web1g","web1h","web1i",
-    "web1j","web1k", "income", "educ2", "par", 
-    "marital", "gender", "age"]]
+ss = s[['web1a','web1b','web1c','web1d',
+    'web1e','web1f','web1g','web1h','web1i',
+    'web1j','web1k', 'income', 'educ2', 'par', 
+    'marital', 'gender', 'age', 'sm_li']]
 
-ss["sm_li"] = clean_sm(ss["web1h"])
+
 
 #setting target variable
-y = ss["sum_li"]
+y = ss['sm_li']
 
 #features used for prediction
-X = ss[["web1a","web1b","web1c","web1d",
-    "web1e","web1f","web1g","web1i",
-    "web1j","web1k", "income", "educ2", "par", 
-    "marital", "gender", "age"]]
+X = ss[['web1a','web1b','web1c','web1d',
+    'web1e','web1f','web1g','web1i',
+    'web1j','web1k', 'income', 'educ2', 'par', 
+    'marital', 'gender', 'age']]
 
 
 # X_train - training data features for prediction on test set
@@ -63,5 +65,5 @@ X_train, X_test, y_train, y_test = train_test_split(X,
                                                     random_state=18)
 
 
-ss.lm_si.value_counts()
+print(ss['sm_li'].value_counts())
 
