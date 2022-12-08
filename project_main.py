@@ -9,6 +9,7 @@ s = pd.read_csv("social_media_usage.csv")
 
 def clean_sm(x):
     x = np.where(x ==1, 1, 0)
+    return(x)
 
 toy = pd.DataFrame({
     "Name": ["dog", "car", "bear"],
