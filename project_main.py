@@ -20,3 +20,6 @@ toy['1$ section'] = clean_sm(toy['Cost'])
 
 print(toy)
 
+ss = s[["web1", "income", "educ2", "par", "marital", "gender", "age"]]
+
+
