@@ -1,5 +1,4 @@
 pandas
-os
 numpy
 scikit-learn
 sklearn.linear_model
