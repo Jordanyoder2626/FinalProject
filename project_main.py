@@ -24,6 +24,14 @@ def clean_sm(x):
 
 ##############################################
 #Model creation
+drop_list = s.index[np.where((s["age"] > 97) |
+                            (s["income"] > 9) |
+                            (s["educ2"] > 8) |
+                            (s["par"] > 2) |
+                            (s["marital"] > 6) |
+                            (s["gender"] > 3))]
+s.drop(drop_list, inplace = True)
+
 
 s['sm_li'] = clean_sm(s['web1h'])
 s = s.astype('category')
@@ -155,8 +163,7 @@ if st.checkbox("Yes"):
     par = 1
 elif st.checkbox("No"):
     par = 2
-elif st.checkbox("Don't Know Parental Status"):
-    par = 8
+
 
 #####################################
 #asking marital status
@@ -198,15 +205,13 @@ elif st.checkbox("Female"):
     gender = 2
 elif st.checkbox("Other"):
     gender = 3
-elif st.checkbox("Don't Know Gender"):
-    gender = 8
+
 
 #####################################
 #asking age
 "#### What is your age?"
 age = st.slider("Age", min_value=18, max_value=97)
-if st.checkbox("Check this box if you do not know your age"):
-    age = 98
+
 
 
 newdata = pd.DataFrame({
@@ -218,23 +223,30 @@ newdata = pd.DataFrame({
     "age" : [age],
 })
 
+var_list = [income, educ2, par, marital, gender, age]
+max_var = max(var_list)
+
+
 if st.button("Submit"):
-    probabilities = model1.predict_proba(newdata)
-    p1 = probabilities[0,1]
-
-    p1_str = "{:.2%}".format(p1)
-
-    if p1 >= .5:
-        "## You are a predicted Linkedin User!"
-        im = Image.open("Li_logo.png")
+    if ((max_var > 97) | (par > 7) | (marital>6)):
+        "## Please make sure all questions are answered before submission."
     else:
-        "## You are not a predicted Linkedin User!"
-        im = Image.open("redx.png")
+        probabilities = model1.predict_proba(newdata)
+        p1 = probabilities[0,1]
+
+        p1_str = "{:.2%}".format(p1)
+
+        if p1 >= .5:
+            "## You are a predicted Linkedin User!"
+            im = Image.open("Li_logo.png")
+        else:
+            "## You are not a predicted Linkedin User!"
+            im = Image.open("redx.png")
 
     
-    st.write("The Percentage you are a user is: ", p1_str)
-    im = im.resize((200,200))
-    st.image(im)
+        st.write("The Percentage you are a user is: ", p1_str)
+        im = im.resize((200,200))
+        st.image(im)
 
 
 
