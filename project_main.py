@@ -14,7 +14,7 @@ from PIL import Image
 #read in data
 s = pd.read_csv("social_media_usage.csv")
 
-#creating and testing function for use on dataset
+#creating function to clean linkedin user column
 def clean_sm(x):
     x = np.where(x ==1, 1, 0)
     return(x)
@@ -112,7 +112,7 @@ elif inc == j:
     income = 98
 
 
-###########################################
+#####################################
 #Asking Education Level
 
 "#### What is your highest level of education? "
