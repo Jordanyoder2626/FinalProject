@@ -1,8 +1,5 @@
 pandas
 numpy
 scikit-learn
-sklearn.linear_model
-sklearn.linear_model
-sklearn.metrics
 streamlit
 PIL
