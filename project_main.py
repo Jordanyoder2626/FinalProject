@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 import streamlit as st
+from PIL import Image
 
 
 #read in data
@@ -75,7 +76,7 @@ age = 98
 
 "# Linkedin User Projection"
 
-"#### What is your income range: "
+"#### What is your income range? "
 a = "Less than $10,000"
 b = "10 to under $20,000"
 c = "20 to under $30,000"
@@ -84,7 +85,7 @@ e = "40 to under $50,000"
 f = "50 to under $75,000"
 g = "75 to under $100,000"
 h = "100 to under $150,000"
-i = "$150,000 or more?"
+i = "$150,000 or more"
 j = "Don't know"
 inc =  st.selectbox(label = "Select: ", 
                     options = ("Refuse to Answer",a,b,c,d,e,f,g,h,i,j))
@@ -109,3 +110,133 @@ elif inc == i:
     income = 9
 elif inc == j:
     income = 98
+
+
+###########################################
+#Asking Education Level
+
+"#### What is your highest level of education? "
+a = "Less than high school (Grades 1-8 or no formal schooling)"
+b = "High school incomplete (Grades 9-11 or Grade 12 with NO diploma)"
+c = "High school graduate (Grade 12 with diploma or GED certificate)"
+d = "Some college, no degree (includes some community college)"
+e = "Two-year associate degree from a college or university"
+f = "Four-year college or university degree/Bachelor’s degree (e.g., BS, BA, AB)"
+g = "Some postgraduate or professional schooling, no postgraduate degree (e.g. some graduate school)"
+h = "Postgraduate or professional degree, including master’s, doctorate, medical or law degree (e.g., MA, MS, PhD, MD, JD)"
+j = "Don't know"
+edu =  st.selectbox(label = "Select: ", 
+                    options = ("Refuse to Answer",a,b,c,d,e,f,g,h,j))
+
+if edu == a:
+    educ2 = 1
+elif edu == b:
+    educ2 = 2
+elif edu == c:
+    educ2 = 3
+elif edu == d:
+    educ2 = 4
+elif edu == e:
+    educ2 = 5
+elif edu == f:
+    educ2 = 6
+elif edu == g:
+    educ2 = 7
+elif edu == h:
+    educ2 = 8
+elif edu == j:
+    educ2 = 98
+
+#####################################
+#asking parental status
+
+"#### Are you a parent of a child under 18 living in your home?"
+if st.checkbox("Yes"):
+    par = 1
+elif st.checkbox("No"):
+    par = 2
+elif st.checkbox("Don't Know Parental Status"):
+    par = 8
+
+#####################################
+#asking marital status
+"#### What is your current marital status?:"
+
+a = "Married"
+b = "Living with a Partner"
+c = "Divorced"
+d = "Separated"
+e = "Widowed"
+f = "Never been Married"
+j = "Don't know"
+
+mar =  st.selectbox(label = "Select the best that fits your current situation: ", 
+                    options = ("Refuse to Answer",a,b,c,d,e,f,j))
+
+if mar == a:
+    marital = 1
+elif mar == b:
+    marital = 2
+elif mar == c:
+    marital = 3
+elif mar == d:
+    marital = 4
+elif mar == e:
+    marital = 5
+elif mar == f:
+    marital = 6
+elif mar == j:
+    marital = 98
+
+#####################################
+#asking gender
+
+"#### What is your gender?"
+if st.checkbox("Male"):
+    gender = 1
+elif st.checkbox("Female"):
+    gender = 2
+elif st.checkbox("Other"):
+    gender = 3
+elif st.checkbox("Don't Know Gender"):
+    gender = 8
+
+#####################################
+#asking age
+"#### What is your age?"
+age = st.slider("Age", min_value=18, max_value=97)
+if st.checkbox("Check this box if you do not know your age"):
+    age = 98
+
+
+newdata = pd.DataFrame({
+    "income" : [income],
+    "educ2" : [educ2],
+    "par" : [par],
+    "marital" : [marital],
+    "gender" : [gender],
+    "age" : [age],
+})
+
+if st.button("Submit"):
+    probabilities = model1.predict_proba(newdata)
+    p1 = probabilities[0,1]
+
+    p1_str = "{:.2%}".format(p1)
+
+    if p1 >= .5:
+        "## You are a predicted Linkedin User!"
+        im = Image.open("Li_logo.png")
+    else:
+        "## You are not a predicted Linkedin User!"
+        im = Image.open("redx.png")
+
+    
+    st.write("The Percentage you are a user is: ", p1_str)
+    im = im.resize((200,200))
+    st.image(im)
+
+
+
+
+
