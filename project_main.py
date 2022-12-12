@@ -96,7 +96,7 @@ h = "100 to under $150,000"
 i = "$150,000 or more"
 j = "Don't know"
 inc =  st.selectbox(label = "Select: ", 
-                    options = ("Refuse to Answer",a,b,c,d,e,f,g,h,i,j))
+                    options = ("Refuse to Answer",a,b,c,d,e,f,g,h,i))
 
 if inc == a:
     income = 1
