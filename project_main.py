@@ -134,7 +134,7 @@ g = "Some postgraduate or professional schooling, no postgraduate degree (e.g. s
 h = "Postgraduate or professional degree, including master’s, doctorate, medical or law degree (e.g., MA, MS, PhD, MD, JD)"
 j = "Don't know"
 edu =  st.selectbox(label = "Select: ", 
-                    options = ("Refuse to Answer",a,b,c,d,e,f,g,h,j))
+                    options = ("Refuse to Answer",a,b,c,d,e,f,g,h))
 
 if edu == a:
     educ2 = 1
@@ -178,7 +178,7 @@ f = "Never been Married"
 j = "Don't know"
 
 mar =  st.selectbox(label = "Select the best that fits your current situation: ", 
-                    options = ("Refuse to Answer",a,b,c,d,e,f,j))
+                    options = ("Refuse to Answer",a,b,c,d,e,f))
 
 if mar == a:
     marital = 1
